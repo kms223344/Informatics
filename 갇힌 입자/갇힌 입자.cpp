@@ -1,13 +1,13 @@
 ﻿#include<stdio.h>  // 갇힌 입자
 #pragma warning(disable:4996)
 double abs(double n) { return n * (n > 0 ? 1 : -1); }
-double v[20005], vA[10005], vB[10005];
+double v[200005], vA[100005], vB[100005];
 
 
 void init()
 {
     v[0] = vA[0] = vB[0] = 0;
-    for (int i = 1; i <= 10000; i++) v[2 * i - 1] = v[2 * i] = vA[i] = vB[i] = 0;
+    for (int i = 1; i <= 100000; i++) v[2 * i - 1] = v[2 * i] = vA[i] = vB[i] = 0;
 }
 double f(double v, double vv, double k)
 {
@@ -21,20 +21,22 @@ int main()
 {
     FILE* output = fopen("output.csv", "w");
     FILE* output2 = fopen("output2.csv", "w");
-    if (output or output2) return 0;
-    while(true)
+    //if (output or output2) return -1;
+    //while(true)
+    for(double i = 2; i <= 5; i+=0.001)
     {
         init();
         double v0, k;
         //printf("k? ");
-        scanf("%lf", &k);
+        //scanf("%lf", &k);
+        k = i;
         v0 = 10000;
         //printf("%lf %lf\n", v0, k);
 
         int Q, ans = 0;
         //printf("Q? ");
         //scanf("%d",&Q);
-        Q = 10000;
+        Q = 100000;
 
         v[0] = v0;
 
@@ -59,7 +61,7 @@ int main()
             if (v[2 * i]) fprintf(output, "%03d-2, %.3lf,%.3lf,%.3lf,%c,|vA(%lf) * %lfm + vB(%lf) * %lfm + v(%lf) * m = %lfm\n", i, vB[i], v[2 * i], vA[i], 'B', vA[i], k, vB[i], k, v[2 * i], (vB[i] + vA[i]) * k + v[2 * i]), ans++;
         }
         fprintf(output, "===%d===\n", ans);
-        fprintf(output2, "%d\n", ans);
-        printf("===%d===\n", ans);
+        fprintf(output2, "%.3lf, %d\n",k, ans);
+        //printf("===%d===\n", ans);
     }
 }
